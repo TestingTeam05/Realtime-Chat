@@ -6,7 +6,12 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --forceExit"
+
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:user": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js test/user"
+    
+    
+
   },
   "type": "module",
   "keywords": [],
@@ -26,13 +31,18 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+
+    "@jest/globals": "^30.4.1",
+    "jest": "^30.4.2",
+    "mongodb-memory-server": "^11.2.0",
     "nodemon": "^3.1.10",
     "supertest": "^7.2.2"
+
   },
   "allowScripts": {
     "@scarf/scarf@1.4.0": true,
     "bcrypt@6.0.0": true,
     "unrs-resolver@1.12.2": true
+
   }
 }
