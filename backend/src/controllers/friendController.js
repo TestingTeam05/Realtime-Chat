@@ -1,6 +1,6 @@
 import Friend from "../models/Friend.js";
-import User from "../models/User.js";
 import FriendRequest from "../models/FriendRequest.js";
+import User from "../models/User.js";
 
 export const sendFriendRequest = async (req, res) => {
   try {
@@ -42,7 +42,9 @@ export const sendFriendRequest = async (req, res) => {
     }
 
     if (existingRequest) {
-      return res.status(400).json({ message: "Đã có lời mời kết bạn đang chờ" });
+      return res
+        .status(400)
+        .json({ message: "Đã có lời mời kết bạn đang chờ" });
     }
 
     const request = await FriendRequest.create({
@@ -68,7 +70,9 @@ export const acceptFriendRequest = async (req, res) => {
     const request = await FriendRequest.findById(requestId);
 
     if (!request) {
-      return res.status(404).json({ message: "Không tìm thấy lời mời kết bạn" });
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy lời mời kết bạn" });
     }
 
     if (request.to.toString() !== userId.toString()) {
@@ -77,7 +81,7 @@ export const acceptFriendRequest = async (req, res) => {
         .json({ message: "Bạn không có quyền chấp nhận lời mời này" });
     }
 
-    const friend = await Friend.create({
+    await Friend.create({
       userA: request.from,
       userB: request.to,
     });
@@ -110,7 +114,9 @@ export const declineFriendRequest = async (req, res) => {
     const request = await FriendRequest.findById(requestId);
 
     if (!request) {
-      return res.status(404).json({ message: "Không tìm thấy lời mời kết bạn" });
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy lời mời kết bạn" });
     }
 
     if (request.to.toString() !== userId.toString()) {
@@ -151,7 +157,7 @@ export const getAllFriends = async (req, res) => {
     }
 
     const friends = friendships.map((f) =>
-      f.userA._id.toString() === userId.toString() ? f.userB : f.userA
+      f.userA._id.toString() === userId.toString() ? f.userB : f.userA,
     );
 
     return res.status(200).json({ friends });
