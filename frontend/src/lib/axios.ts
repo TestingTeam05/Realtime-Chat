@@ -29,7 +29,7 @@ api.interceptors.response.use(
       originalRequest.url.includes("/auth/signup") ||
       originalRequest.url.includes("/auth/refresh")
     ) {
-      return Promise.reject(error);
+      return error;
     }
 
     originalRequest._retryCount = originalRequest._retryCount || 0;
@@ -47,11 +47,11 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         useAuthStore.getState().clearState();
-        return Promise.reject(refreshError);
+        return  refreshError;
       }
     }
 
-    return Promise.reject(error);
+    return error;
   }
 );
 

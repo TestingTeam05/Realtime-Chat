@@ -19,7 +19,7 @@ export const uploadImageFromBuffer = (buffer, options) => {
       },
       (error, result) => {
         if (error) {
-          reject(error);
+          reject(new Error(error));
         } else {
           resolve(result);
         }

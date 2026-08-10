@@ -86,13 +86,12 @@ const AddFriendModal = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px] border-none">
+      <DialogContent className="sm:max-w-106.25 border-none">
         <DialogHeader>
           <DialogTitle>Kết Bạn</DialogTitle>
         </DialogHeader>
 
         {!isFound && (
-          <>
             <SearchForm
               register={register}
               errors={errors}
@@ -103,11 +102,9 @@ const AddFriendModal = () => {
               onSubmit={handleSearch}
               onCancel={handleCancel}
             />
-          </>
         )}
 
         {isFound && (
-          <>
             <SendFriendRequestForm
               register={register}
               loading={loading}
@@ -115,7 +112,6 @@ const AddFriendModal = () => {
               onSubmit={handleSend}
               onBack={() => setIsFound(null)}
             />
-          </>
         )}
       </DialogContent>
     </Dialog>

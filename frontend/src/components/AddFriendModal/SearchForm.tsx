@@ -55,8 +55,8 @@ const SearchForm = ({
 
         {isFound === false && (
           <span className="error-message">
-            Không tìm thấy
-            <span className="font-semibold">@{searchedUsername}</span>
+            {`Không tìm thấy người dùng `}
+            <span className="font-semibold"> @{searchedUsername} </span>
           </span>
         )}
       </div>

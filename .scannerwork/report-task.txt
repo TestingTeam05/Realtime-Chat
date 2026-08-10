@@ -1,0 +1,6 @@
+projectKey=mojichat
+serverUrl=http://localhost:9000
+serverVersion=26.8.0.126808
+dashboardUrl=http://localhost:9000/dashboard?id=mojichat
+ceTaskId=fe2b7d65-58cb-421a-a846-7b45b63bdf22
+ceTaskUrl=http://localhost:9000/api/ce/task?id=fe2b7d65-58cb-421a-a846-7b45b63bdf22

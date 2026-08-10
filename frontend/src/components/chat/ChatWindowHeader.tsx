@@ -51,7 +51,6 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
                   name={otherUser?.displayName || "Moji"}
                   avatarUrl={otherUser?.avatarUrl || undefined}
                 />
-                {/* todo: socket io */}
                 <StatusBadge
                   status={
                     onlineUsers.includes(otherUser?._id ?? "") ? "online" : "offline"

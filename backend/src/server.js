@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import { protectedRoute } from "./middlewares/authMiddleware.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import fs from "fs";
+import fs from "node:fs";
 import { app, server } from "./socket/index.js";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -32,7 +32,9 @@ cloudinary.config({
 });
 
 // swagger
-const swaggerDocument = JSON.parse(fs.readFileSync("./src/swagger.json", "utf8"));
+const swaggerDocument = JSON.parse(
+  fs.readFileSync("./src/swagger.json", "utf8"),
+);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -46,8 +48,11 @@ app.use("/api/friends", friendRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/conversations", conversationRoute);
 
-connectDB().then(() => {
+try {
+  await connectDB();
   server.listen(PORT, () => {
     console.log(`server bắt đầu trên cổng ${PORT}`);
   });
-});
+} catch (error) {
+  console.error("Failed to connect to DB", error);
+}

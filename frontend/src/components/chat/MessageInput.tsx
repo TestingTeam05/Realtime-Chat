@@ -23,7 +23,8 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
     try {
       if (selectedConvo.type === "direct") {
         const participants = selectedConvo.participants;
-        const otherUser = participants.filter((p) => p._id !== user._id)[0];
+        const otherUser = participants.find((p) => p._id !== user._id);
+        if(!otherUser) return;
         await sendDirectMessage(otherUser._id, currValue);
       } else {
         await sendGroupMessage(selectedConvo._id, currValue);
@@ -53,7 +54,7 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
 
       <div className="flex-1 relative">
         <Input
-          onKeyPress={handleKeyPress}
+          onKeyUp={handleKeyPress}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Soạn tin nhắn..."

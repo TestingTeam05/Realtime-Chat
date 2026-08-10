@@ -2,7 +2,8 @@ node_modules/
 .env
 !.env.example
 jsconfig.json
-
+./scannerwork/
+./sonar-project.properties
 # REACT
 # Logs
 logs

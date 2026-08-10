@@ -14,7 +14,6 @@ const SentRequests = () => {
 
   return (
     <div className="space-y-3 mt-4">
-      <>
         {sentList.map((req) => (
           <FriendRequestItem
             key={req._id}
@@ -25,7 +24,6 @@ const SentRequests = () => {
             }
           />
         ))}
-      </>
     </div>
   );
 };

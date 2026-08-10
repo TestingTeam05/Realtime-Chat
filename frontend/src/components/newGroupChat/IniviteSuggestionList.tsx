@@ -15,11 +15,12 @@ const IniviteSuggestionList = ({
   }
 
   return (
-    <div className="border rounded-lg mt-2 max-h-[180px] overflow-y-auto divide-y">
+    <div className="border rounded-lg mt-2 max-h-45 overflow-y-auto divide-y">
       {filteredFriends.map((friend) => (
-        <div
+        <button
           key={friend._id}
-          className="flex items-center gap-3 p-2 cursor-pointer hover:bg-muted transition"
+          type="button"
+          className="flex items-center gap-3 p-2 w-full text-left cursor-pointer hover:bg-muted transition"
           onClick={() => onSelect(friend)}
         >
           <UserAvatar
@@ -29,7 +30,7 @@ const IniviteSuggestionList = ({
           />
 
           <span className="font-medium">{friend.displayName}</span>
-        </div>
+        </button>
       ))}
     </div>
   );
