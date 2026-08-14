@@ -127,15 +127,15 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
           <div className="bg-muted relative hidden md:block">
             <img
               src="/placeholder.png"
-              alt="Image"
+              alt=""
               className="absolute top-1/2 -translate-y-1/2 object-cover"
             />
           </div>
         </CardContent>
       </Card>
       <div className=" text-xs text-balance px-6 text-center *:[a]:hover:text-primary text-muted-foreground *:[a]:underline *:[a]:underline-offetset-4">
-        Bằng cách tiếp tục, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và{" "}
-        <a href="#">Chính sách bảo mật</a> của chúng tôi.
+        Bằng cách tiếp tục, bạn đồng ý với <a href="#terms">Điều khoản dịch vụ</a> và{" "}
+        <a href="#policy">Chính sách bảo mật</a> của chúng tôi.
       </div>
     </div>
   );
