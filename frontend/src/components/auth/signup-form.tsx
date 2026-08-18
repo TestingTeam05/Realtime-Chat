@@ -117,7 +117,6 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                 <Input
                   type="text"
                   id="username"
-                  placeholder="moji"
                   {...register("username")}
                 />
                 {errors.username && (
@@ -136,7 +135,6 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                 <Input
                   type="email"
                   id="email"
-                  placeholder="m@gmail.com"
                   {...register("email")}
                 />
                 {errors.email && (

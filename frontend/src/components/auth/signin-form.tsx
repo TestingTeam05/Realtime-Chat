@@ -74,7 +74,7 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
                 <Input
                   type="text"
                   id="username"
-                  placeholder="moji"
+                  placeholder="Username"
                   {...register("username")}
                 />
                 {errors.username && (
@@ -95,6 +95,7 @@ export function SigninForm({ className, ...props }: React.ComponentProps<"div">)
                 <Input
                   type="password"
                   id="password"
+                  placeholder="Password"
                   {...register("password")}
                 />
                 {errors.password && (

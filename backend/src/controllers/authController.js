@@ -2,7 +2,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import Session from "../models/Session.js";
 
 const ACCESS_TOKEN_TTL = "30m"; // thuờng là dưới 15m
@@ -12,17 +12,19 @@ export const signUp = async (req, res) => {
   try {
     const { username, password, email, firstName, lastName } = req.body;
 
-    if (!username || !password || !email || !firstName || !lastName) {
+    if (!username || !password || !email || !firstName || !lastName || !username.trim() || !password.trim() || !email.trim() || !firstName.trim() || !lastName.trim()) {
       return res.status(400).json({
         message: "Không thể thiếu username, password, email, firstName, và lastName",
       });
     }
 
-    // kiểm tra username tồn tại chưa
-    const duplicate = await User.findOne({ username });
-
+    // kiểm tra username hoặc email tồn tại chưa
+    const duplicate = await User.findOne({ $or: [{ username }, { email }] });
     if (duplicate) {
-      return res.status(409).json({ message: "username đã tồn tại" });
+      if (duplicate.username === username) {
+        return res.status(409).json({ message: "username đã tồn tại" });
+      }
+      return res.status(409).json({ message: "email đã tồn tại" });
     }
 
     // mã hoá password
@@ -37,7 +39,10 @@ export const signUp = async (req, res) => {
     });
 
     // return
-    return res.sendStatus(204);
+    return res.status(201).json({
+      message: "Đăng ký thành công",
+      status: "201"
+    });
   } catch (error) {
     console.error("Lỗi khi gọi signUp", error);
     return res.status(500).json({ message: "Lỗi hệ thống" });
@@ -55,10 +60,9 @@ export const signIn = async (req, res) => {
 
     // lấy hashedPassword trong db để so với password input
     const user = await User.findOne({ username });
-
     if (!user) {
       return res
-        .status(401)
+        .status(404)
         .json({ message: "username hoặc password không chính xác" });
     }
 
