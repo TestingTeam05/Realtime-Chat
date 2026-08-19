@@ -62,7 +62,7 @@ export const signIn = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) {
       return res
-        .status(404)
+        .status(401)
         .json({ message: "username hoặc password không chính xác" });
     }
 
