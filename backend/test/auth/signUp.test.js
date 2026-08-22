@@ -52,18 +52,24 @@ describe("signUp", () => {
   };
 
   // --- Happy path ---
-  it("nên tạo user thành công và trả về 204", async () => {
+  it("nên tạo user thành công và trả về 201", async () => {
     const req = mockReq({ body: validBody });
     const res = mockRes();
 
-    User.findOne.mockResolvedValue(null); // không trùng username
+    User.findOne.mockResolvedValue(null); // không trùng
     bcrypt.hash.mockResolvedValue("hashed_password_123");
     User.create.mockResolvedValue({});
 
     await signUp(req, res);
 
-    expect(res.sendStatus).toHaveBeenCalledWith(204);
-    expect(User.findOne).toHaveBeenCalledWith({ username: "testuser" });
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Đăng ký thành công",
+      status: "201",
+    });
+    expect(User.findOne).toHaveBeenCalledWith({
+      $or: [{ username: "testuser" }, { email: "test@example.com" }],
+    });
     expect(bcrypt.hash).toHaveBeenCalledWith("Test@123", 10);
     expect(User.create).toHaveBeenCalledWith({
       username: "testuser",
@@ -135,14 +141,30 @@ describe("signUp", () => {
     const req = mockReq({ body: validBody });
     const res = mockRes();
 
-    User.findOne.mockResolvedValue({ _id: "existing_user" }); // đã tồn tại
+    User.findOne.mockResolvedValue({ _id: "existing_user", username: "testuser" });
 
     await signUp(req, res);
 
     expect(res.status).toHaveBeenCalledWith(409);
     expect(res.json).toHaveBeenCalledWith({ message: "username đã tồn tại" });
-    expect(bcrypt.hash).not.toHaveBeenCalled(); // không hash nếu trùng
-    expect(User.create).not.toHaveBeenCalled(); // không tạo user
+    expect(bcrypt.hash).not.toHaveBeenCalled();
+    expect(User.create).not.toHaveBeenCalled();
+  });
+
+  // --- Email trùng ---
+  it("nên trả 409 nếu email đã tồn tại", async () => {
+    const req = mockReq({ body: validBody });
+    const res = mockRes();
+
+    // username khác nhưng email trùng
+    User.findOne.mockResolvedValue({ _id: "existing_user", username: "otheruser" });
+
+    await signUp(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({ message: "email đã tồn tại" });
+    expect(bcrypt.hash).not.toHaveBeenCalled();
+    expect(User.create).not.toHaveBeenCalled();
   });
 
   // --- Lỗi DB ---
