@@ -17,7 +17,7 @@ const signInSchema = z.object({
   password: z
     .string()
     .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-    .max(128, "Mật khẩu tối đa 128 ký tự"),
+    .max(20, "Mật khẩu tối đa 20 ký tự"),
 });
 
 type SignInFormValues = z.infer<typeof signInSchema>;
